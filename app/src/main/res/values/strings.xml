@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Car Rental</string>
+    <string name="menu_setting">Setting</string>
+    <string name="menu_add">Add</string>
+    <string name="tab_orders">Orders</string>
+    <string name="tab_cars">Cars</string>
+    <string name="tab_users">User</string>
+</resources>
