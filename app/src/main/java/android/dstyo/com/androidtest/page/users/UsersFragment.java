@@ -1,6 +1,7 @@
 package android.dstyo.com.androidtest.page.users;
 
 
+import android.dstyo.com.androidtest.R;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,8 +9,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import android.dstyo.com.androidtest.R;
 
 /**
  * Representing Orders Fragment.
@@ -30,7 +29,12 @@ public class UsersFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true);
-        return inflater.inflate(R.layout.fragment_users, container, false);
+        UsersListFragment usersListFragment = new UsersListFragment();
+        getChildFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fl_content, usersListFragment)
+                .commit();
+        return inflater.inflate(R.layout.fragment_user, container, false);
     }
 
     @Override

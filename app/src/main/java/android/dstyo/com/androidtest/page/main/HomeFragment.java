@@ -4,7 +4,8 @@ import android.dstyo.com.androidtest.R;
 import android.dstyo.com.androidtest.adapter.ViewPagerAdapter;
 import android.dstyo.com.androidtest.base.BaseFragment;
 import android.dstyo.com.androidtest.page.cars.CarsFragment;
-import android.dstyo.com.androidtest.page.orders.OrdersFragment;
+import android.dstyo.com.androidtest.page.cars.CarsListFragment;
+import android.dstyo.com.androidtest.page.orders.OrdersListFragment;
 import android.dstyo.com.androidtest.page.users.UsersFragment;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -47,7 +48,7 @@ public class HomeFragment extends BaseFragment {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        OrdersFragment ordersFragment = new OrdersFragment();
+        OrdersListFragment ordersFragment = new OrdersListFragment();
         CarsFragment carsFragment = new CarsFragment();
         UsersFragment usersFragment = new UsersFragment();
         adapter.addFragment(ordersFragment, getResources().getString(R.string.tab_orders));
@@ -55,5 +56,4 @@ public class HomeFragment extends BaseFragment {
         adapter.addFragment(usersFragment, getResources().getString(R.string.tab_users));
         viewPager.setAdapter(adapter);
     }
-
 }

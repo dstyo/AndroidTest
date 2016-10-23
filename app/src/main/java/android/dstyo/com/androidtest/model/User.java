@@ -21,9 +21,13 @@ public class User implements Serializable {
     @Expose
     public String name;
 
+    @SerializedName("address")
+    @Expose
+    public String address;
+
     @SerializedName("mobile")
     @Expose
-    public String mobile;
+    public String mobilePhone;
 
     public int getId() {
         return id;
@@ -41,11 +45,19 @@ public class User implements Serializable {
         this.name = name;
     }
 
-    public String getMobile() {
-        return mobile;
+    public String getMobilePhone() {
+        return mobilePhone;
     }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public void setMobilePhone(String mobilePhone) {
+        this.mobilePhone = mobilePhone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

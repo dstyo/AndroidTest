@@ -29,6 +29,10 @@ public class Car implements Serializable {
     @Expose
     private String license_plat;
 
+    @SerializedName("fare")
+    @Expose
+    private double farePerDay;
+
     public int getId() {
         return id;
     }
@@ -59,5 +63,13 @@ public class Car implements Serializable {
 
     public void setLicense_plat(String license_plat) {
         this.license_plat = license_plat;
+    }
+
+    public double getFarePerDay() {
+        return farePerDay;
+    }
+
+    public void setFarePerDay(double farePerDay) {
+        this.farePerDay = farePerDay;
     }
 }

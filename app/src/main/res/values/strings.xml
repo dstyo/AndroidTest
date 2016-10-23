@@ -5,4 +5,14 @@
     <string name="tab_orders">Orders</string>
     <string name="tab_cars">Cars</string>
     <string name="tab_users">User</string>
+    <string name="no_item_found">No Item Found</string>
+    <string name="dots">...</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="detail">DETAIL</string>
+    <string name="menu_order">Order</string>
+    <string name="menu_update">Update</string>
+    <string name="menu_delete">Delete</string>
+    <string name="menu_detail">Detail</string>
 </resources>

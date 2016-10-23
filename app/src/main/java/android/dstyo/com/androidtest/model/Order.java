@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @author Dwi Setiyono <dstyo91@gmail.com>
  * @since 2016.10.21
  */
-public class Rental implements Serializable {
+public class Order implements Serializable {
 
     @SerializedName("id")
     @Expose

@@ -30,7 +30,12 @@ public class CarsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true);
-        return inflater.inflate(R.layout.fragment_cars, container, false);
+        CarsListFragment carsListFragment = new CarsListFragment();
+        getChildFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fl_content, carsListFragment)
+                .commit();
+        return inflater.inflate(R.layout.fragment_car, container, false);
     }
 
     @Override
