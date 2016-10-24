@@ -39,4 +39,5 @@ public class RequestBundle {
     public boolean isPostRequest() {
         return isPostRequest;
     }
+
 }

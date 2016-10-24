@@ -41,7 +41,7 @@ public class GeneralResponseHandler extends JsonHttpResponseHandler {
 
     @Override
     public void onFailure(int statusCode, Header[] headers, Throwable throwable,
-                          JSONObject errorResponse) {
+                          JSONArray errorResponse) {
         onErrorResponse(
                 statusCode,
                 headers,
@@ -51,7 +51,7 @@ public class GeneralResponseHandler extends JsonHttpResponseHandler {
     }
 
     private void onErrorResponse(int statusCode, Header[] headers, Throwable throwable,
-                                 JSONObject errorResponse) {
+                                 JSONArray errorResponse) {
         if (errorResponse == null) {
             Log.d(TAG, "Throwable: " + throwable.getLocalizedMessage());
             responseHandler.onFailure(statusCode, headers, throwable, new JSONObject());

@@ -1,15 +1,17 @@
 package android.dstyo.com.androidtest.page.cars;
 
 
+import android.app.Activity;
+import android.content.Intent;
 import android.dstyo.com.androidtest.R;
 import android.dstyo.com.androidtest.adapter.CarsListAdapter;
+import android.dstyo.com.androidtest.api.handler.BooleanResponseHandler;
 import android.dstyo.com.androidtest.api.handler.CarListResponseHandler;
 import android.dstyo.com.androidtest.api.request.CarRequest;
 import android.dstyo.com.androidtest.base.AbstractListFragment;
 import android.dstyo.com.androidtest.model.Car;
 import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -46,14 +48,27 @@ public class CarsListFragment extends AbstractListFragment<Car> {
                 = new CarsListAdapter.CarListClickListener() {
 
             @Override
-            public void onMoreActionClick(View v, int selectedIndex) {
+            public void onMoreActionClick(View v, final int position) {
                 PopupMenu popupMenu = new PopupMenu(getActivity(), v);
                 popupMenu.getMenuInflater().inflate(R.menu.menu_popup_car, popupMenu.getMenu());
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        onOptionsItemSelected(item);
-                        return true;
+                        Intent intent = new Intent(getContext(),OrderCarsActivity.class);
+                        switch (item.getItemId()) {
+                            case R.id.menu_car_detele:
+                                deleteCars();
+                                getListAdapter().notifyItemRemoved(position);
+                                return true;
+                            case R.id.menu_car_order:
+                                startActivity(intent);
+                                return true;
+                            case R.id.menu_car_update:
+                                startActivity(intent);
+                                return true;
+                            default:
+                                return false;
+                        }
                     }
                 });
                 popupMenu.show();
@@ -74,10 +89,10 @@ public class CarsListFragment extends AbstractListFragment<Car> {
     @Override
     protected void doLoadList() {
         showLoading();
-        getListOrders();
+        getListCars();
     }
 
-    private void getListOrders() {
+    private void getListCars() {
         RequestParams requestParams = new RequestParams();
         (new CarRequest(this)).getCars(
                 requestParams,
@@ -95,6 +110,29 @@ public class CarsListFragment extends AbstractListFragment<Car> {
                     @Override
                     public void onRequestTimedOut() {
                         //setInternetTimedOut(getCoordinatorLayout());
+                    }
+                }
+        );
+    }
+
+    private void deleteCars(){
+        RequestParams requestParams = new RequestParams();
+        (new CarRequest(this)).deleteCars(
+                "3",
+                new BooleanResponseHandler(){
+                    @Override
+                    public void onSuccess(Boolean status) {
+
+                    }
+
+                    @Override
+                    public void onFailure(JSONObject errorResponse) {
+
+                    }
+
+                    @Override
+                    public void onRequestTimedOut() {
+                        //setInternetTimedOut(binding.content);
                     }
                 }
         );

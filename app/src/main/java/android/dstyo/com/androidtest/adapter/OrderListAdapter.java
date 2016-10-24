@@ -63,9 +63,11 @@ public class OrderListAdapter extends AbstractListAdapter<Order> {
         String titleOrder = order.getUser().getName() + " | " + order.getCar().getModel();
         orderViewHolder.titleOrder.setText(titleOrder);
         orderViewHolder.statusOrder.setText(getStatus(order.getEnd_date()));
+        orderViewHolder.orderListClickListener
+                = (OrderListClickListener) getListClickListener();
     }
 
-    private String getStatus(String orderEndDate){
+    private String getStatus(String orderEndDate) {
         String statusOrder = null;
         String dateFormat = "yyyy-MM-dd";
 
@@ -87,15 +89,37 @@ public class OrderListAdapter extends AbstractListAdapter<Order> {
         return statusOrder;
     }
 
-    private class OrderViewHolder extends RecyclerView.ViewHolder {
+    /**
+     * Used to communicating interaction between adapter and other fragment or activity.
+     */
+    public interface OrderListClickListener extends ListClickListener {
+        /**
+         * Called when more button (has three dots on the upper right) has been clicked.
+         *
+         * @param selectedIndex the item index on the list
+         */
+        void onActionClick(View view, int selectedIndex);
+
+    }
+
+    private class OrderViewHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener {
         private final TextView titleOrder;
         private final TextView statusOrder;
+        protected OrderListClickListener orderListClickListener;
 
         public OrderViewHolder(View v) {
             super(v);
-
             titleOrder = (TextView) v.findViewById(R.id.tv_order_title);
             statusOrder = (TextView) v.findViewById(R.id.tv_order_status);
+            v.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (null != orderListClickListener) {
+                orderListClickListener.onActionClick(view, getAdapterPosition());
+            }
         }
     }
 }

@@ -2,19 +2,13 @@ package android.dstyo.com.androidtest.page.users;
 
 
 import android.dstyo.com.androidtest.R;
-import android.dstyo.com.androidtest.adapter.CarsListAdapter;
 import android.dstyo.com.androidtest.adapter.UsersListAdapter;
-import android.dstyo.com.androidtest.api.handler.CarListResponseHandler;
 import android.dstyo.com.androidtest.api.handler.UserListResponseHandler;
-import android.dstyo.com.androidtest.api.request.CarRequest;
 import android.dstyo.com.androidtest.api.request.UserRequest;
 import android.dstyo.com.androidtest.base.AbstractListFragment;
-import android.dstyo.com.androidtest.model.Car;
 import android.dstyo.com.androidtest.model.User;
 import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -52,14 +46,19 @@ public class UsersListFragment extends AbstractListFragment<User> {
                 = new UsersListAdapter.UserListClickListener() {
 
             @Override
-            public void onMoreActionClick(View v, int selectedIndex) {
+            public void onMoreActionClick(View v, final int selectedIndex) {
                 PopupMenu popupMenu = new PopupMenu(getActivity(), v);
                 popupMenu.getMenuInflater().inflate(R.menu.menu_popup_user, popupMenu.getMenu());
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        onOptionsItemSelected(item);
-                        return true;
+                        switch (item.getItemId()) {
+                            case R.id.menu_user_detele:
+                                getListAdapter().notifyItemRemoved(selectedIndex);
+                                return true;
+                            default:
+                                return false;
+                        }
                     }
                 });
                 popupMenu.show();

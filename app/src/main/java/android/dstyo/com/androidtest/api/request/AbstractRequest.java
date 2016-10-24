@@ -91,4 +91,20 @@ public abstract class AbstractRequest {
                 responseHandler
         );
     }
+
+    /**
+     * Send delete request to async rest client manager.
+     *
+     * @param relativeUrl       complete relative url
+     * @param params            http request params
+     * @param responseHandler   response handler that handle the callback
+     */
+    protected void delete(String relativeUrl, RequestParams params,
+                       AbstractResponseHandler responseHandler) {
+        restClientManager.delete(
+                relativeUrl,
+                params,
+                responseHandler
+        );
+    }
 }

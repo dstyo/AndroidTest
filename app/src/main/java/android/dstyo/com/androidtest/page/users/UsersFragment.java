@@ -3,10 +3,13 @@ package android.dstyo.com.androidtest.page.users;
 
 import android.dstyo.com.androidtest.R;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -34,12 +37,38 @@ public class UsersFragment extends Fragment {
                 .beginTransaction()
                 .replace(R.id.fl_content, usersListFragment)
                 .commit();
-        return inflater.inflate(R.layout.fragment_user, container, false);
+        View view = inflater.inflate(R.layout.fragment_user, container, false);
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addUserDialog();
+            }
+        });
+        return view;
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_users, menu);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_add:
+                addUserDialog();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void addUserDialog() {
+        FragmentManager fragmentManager = getChildFragmentManager();
+        UserAddFragment userAddFragment = new UserAddFragment();
+        userAddFragment.show(fragmentManager, "tag");
+    }
+
 
 }

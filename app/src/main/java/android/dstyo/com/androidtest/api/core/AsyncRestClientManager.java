@@ -58,6 +58,24 @@ public class AsyncRestClientManager {
     }
 
     /**
+     * Send html delete method request to async http client.
+     *
+     * @param relativeUrl       relative url that come after domain prefix
+     * @param params            http request parameter
+     * @param responseHandler   response handler that handle the callback
+     */
+    public void delete(String relativeUrl, RequestParams params,
+                    AbstractResponseHandler responseHandler) {
+        RequestBundle requestBundle = new RequestBundle(
+                relativeUrl,
+                params,
+                responseHandler,
+                false
+        );
+        restClient.doRequest(requestBundle, tagRequest);
+    }
+
+    /**
      * Cancel async http request that has been marked with tag.
      *
      * @param TAG   TAG that marked request which wants to be stopped

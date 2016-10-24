@@ -1,15 +1,18 @@
 package android.dstyo.com.androidtest.page.orders;
 
 
+import android.content.Intent;
 import android.dstyo.com.androidtest.R;
 import android.dstyo.com.androidtest.adapter.OrderListAdapter;
 import android.dstyo.com.androidtest.api.handler.OrderListResponseHandler;
 import android.dstyo.com.androidtest.api.request.OrderRequest;
 import android.dstyo.com.androidtest.base.AbstractListFragment;
 import android.dstyo.com.androidtest.model.Order;
+import android.dstyo.com.androidtest.page.cars.OrderCarsActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
 
 import com.loopj.android.http.RequestParams;
 
@@ -41,7 +44,15 @@ public class OrdersListFragment extends AbstractListFragment<Order> {
 
     @Override
     protected void setListListener() {
-
+        OrderListAdapter.OrderListClickListener orderListClickListener =
+                new OrderListAdapter.OrderListClickListener() {
+            @Override
+            public void onActionClick(View view, int selectedIndex) {
+                Intent intent = new Intent(getContext(), OrderCarsActivity.class);
+                getContext().startActivity(intent);
+            }
+        };
+        setListListener(orderListClickListener);
     }
 
     @Override

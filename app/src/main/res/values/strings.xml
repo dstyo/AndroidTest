@@ -15,4 +15,18 @@
     <string name="menu_update">Update</string>
     <string name="menu_delete">Delete</string>
     <string name="menu_detail">Detail</string>
+    <string name="name_field">Name</string>
+    <string name="start_date_field">Start Date</string>
+    <string name="end_date_field">End Date</string>
+    <string name="btn_confirm">Confirm</string>
+    <string name="order_title">Order</string>
+    <string name="mobile_phone_field">Mobile Phone</string>
+    <string name="address_field">Address</string>
+    <string name="btn_save">Save</string>
+    <string name="new_user_popup">New User</string>
+    <string name="add_new_car_title">Add New Car</string>
+    <string name="car_brand_field">Car Brand</string>
+    <string name="car_model_field">Car Model</string>
+    <string name="car_license_plat_field">Car License Plat</string>
+    <string name="fare_per_day_field">Fare Per Day</string>
 </resources>

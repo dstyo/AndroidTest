@@ -6,4 +6,5 @@
     <dimen name="text_margin">16dp</dimen>
     <dimen name="font_size_secondary">16sp</dimen>
     <dimen name="divider_margin">5dp</dimen>
+    <dimen name="field_size">80dp</dimen>
 </resources>

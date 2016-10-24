@@ -41,6 +41,13 @@ public class AsyncRestClient {
             );
         }
 
+//        if (requestBundle.isDeleteRequest()) {
+//            return asyncHttpClient.delete(
+//                    absoluteUrl,
+//                    responseHandler
+//            );
+//        }
+
         return asyncHttpClient.get(
                 absoluteUrl,
                 params,
