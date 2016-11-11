@@ -5,6 +5,8 @@ import android.dstyo.com.androidtest.api.interfaces.TagInterface;
 
 import com.loopj.android.http.RequestParams;
 
+import org.json.JSONObject;
+
 /**
  * @author Dwi Setiyono <dstyo91@gmail.com>
  * @since 2016.10.22
@@ -17,7 +19,7 @@ public class OrderRequest extends AbstractRequest {
         super("", tagInterface);
     }
 
-    public void getOrders(RequestParams requestParams, OrderListResponseHandler responseHandler) {
+    public void getOrders(JSONObject requestParams, OrderListResponseHandler responseHandler) {
         get(
                 getCompleteUrl(API_ORDER_REQUEST),
                 requestParams,

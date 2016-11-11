@@ -60,6 +60,7 @@ public class CarsListAdapter extends AbstractListAdapter<Car> {
         Car car = getItemAt(position);
         CarViewHolder carViewHolder = (CarViewHolder) holder;
         String titleOrder = car.getLicense_plat() + " | " + car.getModel();
+        carViewHolder.car = car;
         carViewHolder.titleCar.setText(titleOrder);
         carViewHolder.amountCar.setText(CurrencyFormatter.format(car.getFarePerDay()));
         carViewHolder.statusCar.setText("available");
@@ -74,14 +75,16 @@ public class CarsListAdapter extends AbstractListAdapter<Car> {
         /**
          * Called when more button (has three dots on the upper right) has been clicked.
          *
-         * @param selectedIndex the item index on the list
+         * @param car the item on the list
          */
-        void onMoreActionClick(View view, int selectedIndex);
+        void onMoreActionClick(View view, Car car);
 
     }
 
     private class CarViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
+
+        private Car car;
         private final TextView titleCar;
         private final TextView statusCar;
         private final ImageView imgViewMoreMenu;
@@ -101,7 +104,7 @@ public class CarsListAdapter extends AbstractListAdapter<Car> {
         @Override
         public void onClick(View view) {
             if (null != carListClickListener) {
-                    carListClickListener.onMoreActionClick(view, getAdapterPosition());
+                carListClickListener.onMoreActionClick(view, car);
             }
         }
     }

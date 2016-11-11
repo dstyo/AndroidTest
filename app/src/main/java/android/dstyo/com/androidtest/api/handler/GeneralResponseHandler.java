@@ -40,6 +40,11 @@ public class GeneralResponseHandler extends JsonHttpResponseHandler {
     }
 
     @Override
+    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+        responseHandler.onSuccess(statusCode, headers, response);
+    }
+
+    @Override
     public void onFailure(int statusCode, Header[] headers, Throwable throwable,
                           JSONArray errorResponse) {
         onErrorResponse(
@@ -50,15 +55,25 @@ public class GeneralResponseHandler extends JsonHttpResponseHandler {
         );
     }
 
+    @Override
+    public void onFailure(int statusCode, Header[] headers, Throwable throwable,
+                          JSONObject errorResponse) {
+        onErrorResponse(
+                statusCode,
+                headers,
+                throwable,
+                errorResponse
+        );
+    }
+
     private void onErrorResponse(int statusCode, Header[] headers, Throwable throwable,
                                  JSONArray errorResponse) {
-        if (errorResponse == null) {
-            Log.d(TAG, "Throwable: " + throwable.getLocalizedMessage());
-            responseHandler.onFailure(statusCode, headers, throwable, new JSONObject());
-            return;
-        }
-
         responseHandler.onFailure(statusCode, headers, throwable, new JSONObject());
 
+    }
+
+    private void onErrorResponse(int statusCode, Header[] headers, Throwable throwable,
+                                 JSONObject errorResponse) {
+        responseHandler.onFailure(statusCode, headers, throwable, new JSONObject());
     }
 }

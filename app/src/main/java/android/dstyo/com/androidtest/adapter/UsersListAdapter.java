@@ -58,6 +58,7 @@ public class UsersListAdapter extends AbstractListAdapter<User> {
 
         User user = getItemAt(position);
         UsersViewHolder userViewHolder = (UsersViewHolder) holder;
+        userViewHolder.user = user;
         userViewHolder.titleUser.setText(user.getName());
         userViewHolder.addressUser.setText(user.getAddress());
         userViewHolder.userListClickListener
@@ -71,14 +72,16 @@ public class UsersListAdapter extends AbstractListAdapter<User> {
         /**
          * Called when more button (has three dots on the upper right) has been clicked.
          *
-         * @param selectedIndex the item index on the list
+         * @param user the item index on the list
          */
-        void onMoreActionClick(View view, int selectedIndex);
+        void onMoreActionClick(View view, User user);
 
     }
 
     private class UsersViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
+
+        private User user;
         private final TextView titleUser;
         private final TextView addressUser;
         private final ImageView imgViewMoreMenu;
@@ -96,7 +99,7 @@ public class UsersListAdapter extends AbstractListAdapter<User> {
         @Override
         public void onClick(View view) {
             if (null != userListClickListener) {
-                userListClickListener.onMoreActionClick(view, getAdapterPosition());
+                userListClickListener.onMoreActionClick(view, user);
             }
         }
     }

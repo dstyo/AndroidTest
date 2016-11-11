@@ -10,6 +10,7 @@ import android.dstyo.com.androidtest.api.handler.CarListResponseHandler;
 import android.dstyo.com.androidtest.api.request.CarRequest;
 import android.dstyo.com.androidtest.base.AbstractListFragment;
 import android.dstyo.com.androidtest.model.Car;
+import android.dstyo.com.androidtest.model.User;
 import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
 import android.view.MenuItem;
@@ -48,7 +49,7 @@ public class CarsListFragment extends AbstractListFragment<Car> {
                 = new CarsListAdapter.CarListClickListener() {
 
             @Override
-            public void onMoreActionClick(View v, final int position) {
+            public void onMoreActionClick(View v, final Car car) {
                 PopupMenu popupMenu = new PopupMenu(getActivity(), v);
                 popupMenu.getMenuInflater().inflate(R.menu.menu_popup_car, popupMenu.getMenu());
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -57,8 +58,7 @@ public class CarsListFragment extends AbstractListFragment<Car> {
                         Intent intent = new Intent(getContext(),OrderCarsActivity.class);
                         switch (item.getItemId()) {
                             case R.id.menu_car_detele:
-                                deleteCars();
-                                getListAdapter().notifyItemRemoved(position);
+                                deleteCars(car.getId());
                                 return true;
                             case R.id.menu_car_order:
                                 startActivity(intent);
@@ -93,9 +93,8 @@ public class CarsListFragment extends AbstractListFragment<Car> {
     }
 
     private void getListCars() {
-        RequestParams requestParams = new RequestParams();
         (new CarRequest(this)).getCars(
-                requestParams,
+                null,
                 new CarListResponseHandler() {
                     @Override
                     public void onSuccess(List<Car> carList) {
@@ -115,14 +114,15 @@ public class CarsListFragment extends AbstractListFragment<Car> {
         );
     }
 
-    private void deleteCars(){
-        RequestParams requestParams = new RequestParams();
+    private void deleteCars(int carId){
+        showProgressLoading("Deleting Cars");
         (new CarRequest(this)).deleteCars(
-                "3",
+                carId,
                 new BooleanResponseHandler(){
                     @Override
                     public void onSuccess(Boolean status) {
-
+                        doLoadList();
+                        hideProgressLoading();
                     }
 
                     @Override
@@ -136,6 +136,7 @@ public class CarsListFragment extends AbstractListFragment<Car> {
                     }
                 }
         );
+
     }
 
     @Override

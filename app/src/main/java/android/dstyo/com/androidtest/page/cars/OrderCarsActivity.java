@@ -39,9 +39,8 @@ public class OrderCarsActivity extends AbstractAsyncRequestActivity {
     }
 
     private void orderCars() {
-        RequestParams requestParams = new RequestParams();
         (new CarRequest(this)).orderCars(
-                requestParams,
+                null,
                 new CarListResponseHandler() {
                     @Override
                     public void onSuccess(List<Car> carList) {

@@ -1,12 +1,13 @@
 package android.dstyo.com.androidtest;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.dstyo.com.androidtest.api.interfaces.TagInterface;
 import android.dstyo.com.androidtest.page.main.HomeFragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity implements TagInterface{
+public class MainActivity extends AppCompatActivity implements TagInterface {
 
     private static final String TAG = "MainActivity";
 
@@ -26,4 +27,10 @@ public class MainActivity extends AppCompatActivity implements TagInterface{
     public Object getTagRequest() {
         return TAG;
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
 }

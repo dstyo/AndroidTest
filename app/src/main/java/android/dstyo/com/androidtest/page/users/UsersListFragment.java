@@ -3,16 +3,17 @@ package android.dstyo.com.androidtest.page.users;
 
 import android.dstyo.com.androidtest.R;
 import android.dstyo.com.androidtest.adapter.UsersListAdapter;
+import android.dstyo.com.androidtest.api.handler.BooleanResponseHandler;
 import android.dstyo.com.androidtest.api.handler.UserListResponseHandler;
 import android.dstyo.com.androidtest.api.request.UserRequest;
 import android.dstyo.com.androidtest.base.AbstractListFragment;
+import android.dstyo.com.androidtest.constant.RequestConstant;
 import android.dstyo.com.androidtest.model.User;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.PopupMenu;
 import android.view.MenuItem;
 import android.view.View;
-
-import com.loopj.android.http.RequestParams;
 
 import org.json.JSONObject;
 
@@ -46,7 +47,7 @@ public class UsersListFragment extends AbstractListFragment<User> {
                 = new UsersListAdapter.UserListClickListener() {
 
             @Override
-            public void onMoreActionClick(View v, final int selectedIndex) {
+            public void onMoreActionClick(View v, final User user) {
                 PopupMenu popupMenu = new PopupMenu(getActivity(), v);
                 popupMenu.getMenuInflater().inflate(R.menu.menu_popup_user, popupMenu.getMenu());
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -54,7 +55,10 @@ public class UsersListFragment extends AbstractListFragment<User> {
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.menu_user_detele:
-                                getListAdapter().notifyItemRemoved(selectedIndex);
+                                deleteUsers(user.getId());
+                                return true;
+                            case R.id.menu_user_detail:
+                                detailUserDialog(user.getId());
                                 return true;
                             default:
                                 return false;
@@ -69,6 +73,15 @@ public class UsersListFragment extends AbstractListFragment<User> {
         setListListener(userListClickListener);
     }
 
+    private void detailUserDialog(int id) {
+        FragmentManager fragmentManager = getChildFragmentManager();
+        UserAddFragment userAddFragment = new UserAddFragment();
+        Bundle propertyBundle = new Bundle();
+        propertyBundle.putInt(RequestConstant.USER_ID, id);
+        userAddFragment.setArguments(propertyBundle);
+        userAddFragment.show(fragmentManager, "Users");
+    }
+
     @Override
     protected void doInitLoadItems() {
         if (getListAdapter().getItemCount() == 0) {
@@ -79,13 +92,17 @@ public class UsersListFragment extends AbstractListFragment<User> {
     @Override
     protected void doLoadList() {
         showLoading();
-        getListOrders();
+        getListUsers();
     }
 
-    private void getListOrders() {
-        RequestParams requestParams = new RequestParams();
+    private void getListUsers() {
+        if (!isInternetPresent()) {
+            setNoInternetConnection(getView());
+            return;
+        }
+
         (new UserRequest(this)).getUsers(
-                requestParams,
+                null,
                 new UserListResponseHandler() {
                     @Override
                     public void onSuccess(List<User> userList) {
@@ -99,7 +116,34 @@ public class UsersListFragment extends AbstractListFragment<User> {
 
                     @Override
                     public void onRequestTimedOut() {
-                        //setInternetTimedOut(getCoordinatorLayout());
+                    }
+                }
+        );
+    }
+
+    private void deleteUsers(int userId) {
+        if (!isInternetPresent()) {
+            setNoInternetConnection(getView());
+            return;
+        }
+
+        showProgressLoading("Deleting Users");
+        (new UserRequest(this)).deleteUsers(
+                userId,
+                new BooleanResponseHandler() {
+                    @Override
+                    public void onSuccess(Boolean status) {
+                        doLoadList();
+                        hideProgressLoading();
+                    }
+
+                    @Override
+                    public void onFailure(JSONObject errorResponse) {
+                        setZeroLoadedItem();
+                    }
+
+                    @Override
+                    public void onRequestTimedOut() {
                     }
                 }
         );

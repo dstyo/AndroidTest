@@ -8,7 +8,7 @@ import android.support.v4.app.DialogFragment;
  * @author Dwi Setiyono <dstyo91@gmail.com>
  * @since 2016.10.24
  */
-public abstract class AbstractAsyncRequestDialogFragment extends DialogFragment
+public abstract class AbstractAsyncRequestDialogFragment extends BaseDialogFragment
         implements TagInterface {
 
     @Override

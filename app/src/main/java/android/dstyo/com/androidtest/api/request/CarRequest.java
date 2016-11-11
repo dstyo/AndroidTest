@@ -6,6 +6,8 @@ import android.dstyo.com.androidtest.api.interfaces.TagInterface;
 
 import com.loopj.android.http.RequestParams;
 
+import org.json.JSONObject;
+
 /**
  * @author Dwi Setiyono <dstyo91@gmail.com>
  * @since 2016.10.22
@@ -13,6 +15,8 @@ import com.loopj.android.http.RequestParams;
 public class CarRequest extends AbstractRequest {
 
     private static final String API_CARS_REQUEST = "/cars.json";
+    private static final String EXT_CARS_REQUEST = ".json";
+    private static final String ACT_CARS_REQUEST = "/cars/";
     private static final String API_ORDERS_REQUEST = "/orders/new";
 
 
@@ -20,7 +24,7 @@ public class CarRequest extends AbstractRequest {
         super("", tagInterface);
     }
 
-    public void getCars(RequestParams requestParams, CarListResponseHandler responseHandler) {
+    public void getCars(JSONObject requestParams, CarListResponseHandler responseHandler) {
         get(
                 getCompleteUrl(API_CARS_REQUEST),
                 requestParams,
@@ -28,13 +32,13 @@ public class CarRequest extends AbstractRequest {
         );
     }
 
-    public void deleteCars(String id, BooleanResponseHandler responseHandler) {
-        delete(getCompleteUrl("/cars/" + id),
+    public void deleteCars(int id, BooleanResponseHandler responseHandler) {
+        delete(getCompleteUrl(ACT_CARS_REQUEST + id + EXT_CARS_REQUEST),
                 null,
                 responseHandler);
     }
 
-    public void orderCars(RequestParams requestParams, CarListResponseHandler responseHandler) {
+    public void orderCars(JSONObject requestParams, CarListResponseHandler responseHandler) {
         post(
                 getCompleteUrl(API_ORDERS_REQUEST),
                 requestParams,

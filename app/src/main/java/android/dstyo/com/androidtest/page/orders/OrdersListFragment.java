@@ -74,9 +74,8 @@ public class OrdersListFragment extends AbstractListFragment<Order> {
     }
 
     private void getListOrders() {
-        RequestParams requestParams = new RequestParams();
         (new OrderRequest(this)).getOrders(
-                requestParams,
+                null,
                 new OrderListResponseHandler() {
                     @Override
                     public void onSuccess(List<Order> orderList) {

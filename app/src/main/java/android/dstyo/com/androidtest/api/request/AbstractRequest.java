@@ -4,7 +4,10 @@ import android.dstyo.com.androidtest.api.core.AsyncRestClientManager;
 import android.dstyo.com.androidtest.api.handler.AbstractResponseHandler;
 import android.dstyo.com.androidtest.api.interfaces.TagInterface;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+
+import org.json.JSONObject;
 
 /**
  * @author Dwi Setiyono <dstyo91@gmail.com>
@@ -67,7 +70,7 @@ public abstract class AbstractRequest {
      * @param params            http request params
      * @param responseHandler   response handler that handle the callback
      */
-    protected void post(String relativeUrl, RequestParams params,
+    protected void post(String relativeUrl, JSONObject params,
                         AbstractResponseHandler responseHandler) {
         restClientManager.post(
                 relativeUrl,
@@ -83,7 +86,7 @@ public abstract class AbstractRequest {
      * @param params            http request params
      * @param responseHandler   response handler that handle the callback
      */
-    protected void get(String relativeUrl, RequestParams params,
+    protected void get(String relativeUrl, JSONObject params,
                        AbstractResponseHandler responseHandler) {
         restClientManager.get(
                 relativeUrl,
@@ -99,9 +102,25 @@ public abstract class AbstractRequest {
      * @param params            http request params
      * @param responseHandler   response handler that handle the callback
      */
-    protected void delete(String relativeUrl, RequestParams params,
+    protected void delete(String relativeUrl, JSONObject params,
                        AbstractResponseHandler responseHandler) {
         restClientManager.delete(
+                relativeUrl,
+                params,
+                responseHandler
+        );
+    }
+
+    /**
+     * Send put request to async rest client manager.
+     *
+     * @param relativeUrl       complete relative url
+     * @param params            http request params
+     * @param responseHandler   response handler that handle the callback
+     */
+    protected void put(String relativeUrl, JSONObject params,
+                          AbstractResponseHandler responseHandler) {
+        restClientManager.put(
                 relativeUrl,
                 params,
                 responseHandler

@@ -5,6 +5,7 @@ import android.dstyo.com.androidtest.model.ModelFactory;
 import android.dstyo.com.androidtest.model.Order;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,5 +39,10 @@ public class CarListResponseHandler extends AbstractResponseHandler<List<Car>> {
         }
 
         return carList;
+    }
+
+    @Override
+    protected List<Car> parseResponse(JSONObject responseBody) {
+        return null;
     }
 }

@@ -1,11 +1,17 @@
 package android.dstyo.com.androidtest.api.core;
 
+import android.dstyo.com.androidtest.AndroidApplication;
 import android.dstyo.com.androidtest.api.handler.GeneralResponseHandler;
 import android.dstyo.com.androidtest.constant.DomainConstant;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestHandle;
-import com.loopj.android.http.RequestParams;
+
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+
+import cz.msebera.android.httpclient.entity.StringEntity;
 
 /**
  * Restful client class to process request asynchronously.
@@ -31,26 +37,32 @@ public class AsyncRestClient {
 
     private RequestHandle getRequestHandle(RequestBundle requestBundle, Object TAG) {
         String absoluteUrl = getAbsoluteUrl(requestBundle.getRelativeUrl());
-        RequestParams params = requestBundle.getRequestParams();
+        JSONObject params = requestBundle.getRequestParams();
         GeneralResponseHandler responseHandler = new GeneralResponseHandler(this, requestBundle, TAG);
+
         if (requestBundle.isPostRequest()) {
-            return asyncHttpClient.post(
+            StringEntity entity = null;
+            try {
+                entity = new StringEntity(params.toString());
+            }
+            catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            asyncHttpClient.addHeader("Accept", "text/json");
+            asyncHttpClient.addHeader("content-type", "application/json");
+            return asyncHttpClient.post(AndroidApplication.getContext(),
+                    absoluteUrl, entity, "application/json", responseHandler);
+        }
+
+        if (requestBundle.isDeleteRequest()) {
+            return asyncHttpClient.delete(
                     absoluteUrl,
-                    params,
                     responseHandler
             );
         }
 
-//        if (requestBundle.isDeleteRequest()) {
-//            return asyncHttpClient.delete(
-//                    absoluteUrl,
-//                    responseHandler
-//            );
-//        }
-
         return asyncHttpClient.get(
                 absoluteUrl,
-                params,
                 responseHandler
         );
     }

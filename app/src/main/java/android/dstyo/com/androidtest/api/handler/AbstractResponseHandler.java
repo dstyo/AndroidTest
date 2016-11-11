@@ -3,6 +3,7 @@ package android.dstyo.com.androidtest.api.handler;
 
 import android.util.Log;
 
+import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -119,6 +120,46 @@ public abstract class AbstractResponseHandler<T> extends JsonHttpResponseHandler
     }
 
     @Override
+    public void onSuccess(final int statusCode, final Header[] headers, final JSONObject response) {
+        if (response == null) {
+            onSuccess(statusCode, headers, new JSONObject());
+            return;
+        }
+
+        Runnable parser = new Runnable() {
+            @Override
+            public void run() {
+                try {
+
+                    final T object = parseResponse(response);
+                    postRunnable(new Runnable() {
+                        @Override
+                        public void run() {
+                            onSuccess(response, object);
+                        }
+                    });
+
+                }
+                catch (final Exception ex) {
+                    postRunnable(new Runnable() {
+                        @Override
+                        public void run() {
+                            onFailure(statusCode, headers, ex, (JSONObject) null);
+                        }
+                    });
+                }
+            }
+        };
+
+        if (!getUseSynchronousMode()) {
+            new Thread(parser).start();
+        }
+        else {
+            // In synchronous mode everything should be run on one thread
+            parser.run();
+        }    }
+
+    @Override
     public void onSuccess(final int statusCode, final Header[] headers, final JSONArray response) {
         if (response == null) {
             onSuccess(statusCode, headers, new JSONArray());
@@ -166,5 +207,13 @@ public abstract class AbstractResponseHandler<T> extends JsonHttpResponseHandler
      * @return T Object
      */
     protected abstract T parseResponse(JSONArray responseBody);
+
+    /**
+     * Return Generic Object that instantiated from body response.
+     *
+     * @param responseBody JSON responseBody from API
+     * @return T Object
+     */
+    protected abstract T parseResponse(JSONObject responseBody);
 
 }

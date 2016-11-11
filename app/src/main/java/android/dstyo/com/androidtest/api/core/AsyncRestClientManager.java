@@ -4,6 +4,8 @@ import android.dstyo.com.androidtest.api.handler.AbstractResponseHandler;
 
 import com.loopj.android.http.RequestParams;
 
+import org.json.JSONObject;
+
 /**
  * @author Dwi Setiyono <dstyo91@gmail.com>
  * @since 2016.10.22
@@ -28,12 +30,14 @@ public class AsyncRestClientManager {
      * @param params            http request parameter
      * @param responseHandler   response handler that handle the callback
      */
-    public void get(String relativeUrl, RequestParams params,
+    public void get(String relativeUrl, JSONObject params,
                     AbstractResponseHandler responseHandler) {
         RequestBundle requestBundle = new RequestBundle(
                 relativeUrl,
                 params,
                 responseHandler,
+                false,
+                false,
                 false
         );
         restClient.doRequest(requestBundle, tagRequest);
@@ -46,13 +50,15 @@ public class AsyncRestClientManager {
      * @param params            http request parameter
      * @param responseHandler   response handler that handle the callback
      */
-    public void post(String relativeUrl, RequestParams params,
+    public void post(String relativeUrl, JSONObject params,
                      AbstractResponseHandler responseHandler) {
         RequestBundle requestBundle = new RequestBundle(
                 relativeUrl,
                 params,
                 responseHandler,
-                true
+                true,
+                false,
+                false
         );
         restClient.doRequest(requestBundle, tagRequest);
     }
@@ -64,13 +70,35 @@ public class AsyncRestClientManager {
      * @param params            http request parameter
      * @param responseHandler   response handler that handle the callback
      */
-    public void delete(String relativeUrl, RequestParams params,
+    public void delete(String relativeUrl, JSONObject params,
                     AbstractResponseHandler responseHandler) {
         RequestBundle requestBundle = new RequestBundle(
                 relativeUrl,
                 params,
                 responseHandler,
+                false,
+                true,
                 false
+        );
+        restClient.doRequest(requestBundle, tagRequest);
+    }
+
+    /**
+     * Send html delete method request to async http client.
+     *
+     * @param relativeUrl       relative url that come after domain prefix
+     * @param params            http request parameter
+     * @param responseHandler   response handler that handle the callback
+     */
+    public void put(String relativeUrl, JSONObject params,
+                       AbstractResponseHandler responseHandler) {
+        RequestBundle requestBundle = new RequestBundle(
+                relativeUrl,
+                params,
+                responseHandler,
+                false,
+                false,
+                true
         );
         restClient.doRequest(requestBundle, tagRequest);
     }

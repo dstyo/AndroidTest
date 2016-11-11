@@ -5,6 +5,7 @@ import android.dstyo.com.androidtest.model.ModelFactory;
 import android.dstyo.com.androidtest.model.User;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,5 +39,10 @@ public class UserListResponseHandler extends AbstractResponseHandler<List<User>>
         }
 
         return userList;
+    }
+
+    @Override
+    protected List<User> parseResponse(JSONObject responseBody) {
+        return null;
     }
 }

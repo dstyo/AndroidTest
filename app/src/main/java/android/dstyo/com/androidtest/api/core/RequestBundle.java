@@ -4,6 +4,8 @@ import android.dstyo.com.androidtest.api.handler.AbstractResponseHandler;
 
 import com.loopj.android.http.RequestParams;
 
+import org.json.JSONObject;
+
 /**
  * Class that wrapping request parameter on restful client request.
  *
@@ -12,23 +14,28 @@ import com.loopj.android.http.RequestParams;
  */
 public class RequestBundle {
     private final String relativeUrl;
-    private final RequestParams requestParams;
+    private final JSONObject requestParams;
     private final AbstractResponseHandler responseHandler;
     private final boolean isPostRequest;
+    private final boolean isDeleteRequest;
+    private final boolean isPutRequest;
 
-    public RequestBundle(String relativeUrl, RequestParams requestParams,
-                         AbstractResponseHandler responseHandler, boolean isPostRequest) {
+    public RequestBundle(String relativeUrl, JSONObject requestParams,
+                         AbstractResponseHandler responseHandler, boolean isPostRequest,
+                         boolean isDeleteRequest, boolean isPutRequest) {
         this.relativeUrl = relativeUrl;
         this.requestParams = requestParams;
         this.responseHandler = responseHandler;
         this.isPostRequest = isPostRequest;
+        this.isDeleteRequest = isDeleteRequest;
+        this.isPutRequest = isPutRequest;
     }
 
     public String getRelativeUrl() {
         return relativeUrl;
     }
 
-    public RequestParams getRequestParams() {
+    public JSONObject getRequestParams() {
         return requestParams;
     }
 
@@ -40,4 +47,11 @@ public class RequestBundle {
         return isPostRequest;
     }
 
+    public boolean isDeleteRequest() {
+        return isDeleteRequest;
+    }
+
+    public boolean isPutRequest() {
+        return isPutRequest;
+    }
 }

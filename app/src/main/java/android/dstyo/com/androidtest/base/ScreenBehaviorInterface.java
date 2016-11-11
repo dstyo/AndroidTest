@@ -25,4 +25,31 @@ public interface ScreenBehaviorInterface {
      */
     void hideProgressLoading();
 
+    /**
+     * Check whether internet is connected or not.
+     *
+     * @return  <code>true</code> if internet is present or
+     *          <code>false</code> if internet is not available or context is missing.
+     */
+    boolean isInternetPresent();
+
+    /**
+     * Show message that internet connection has timed out.
+     *
+     * @param view the parent view to show snackBar message (usually CoordinatorLayout)
+     */
+    void setInternetTimedOut(View view);
+
+    /**
+     * Show message that no internet connection present.
+     *
+     * @param view the parent view to show snackBar message (usually CoordinatorLayout)
+     */
+    void setNoInternetConnection(View view);
+
+    /**
+     * Return <code>Activity.RESULT_OK</code> intent to Activity's caller.
+     */
+    void returnIntentOK();
+
 }
