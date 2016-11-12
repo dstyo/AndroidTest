@@ -6,6 +6,7 @@ import android.dstyo.com.androidtest.constant.DomainConstant;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestHandle;
+import com.loopj.android.http.RequestParams;
 
 import org.json.JSONObject;
 
@@ -37,10 +38,20 @@ public class AsyncRestClient {
 
     private RequestHandle getRequestHandle(RequestBundle requestBundle, Object TAG) {
         String absoluteUrl = getAbsoluteUrl(requestBundle.getRelativeUrl());
-        JSONObject params = requestBundle.getRequestParams();
+        JSONObject params = requestBundle.getJsonParams();
+        RequestParams requestParams = requestBundle.getRequestParams();
         GeneralResponseHandler responseHandler = new GeneralResponseHandler(this, requestBundle, TAG);
 
         if (requestBundle.isPostRequest()) {
+
+            if (requestParams != null) {
+                return asyncHttpClient.post(
+                        absoluteUrl,
+                        requestParams,
+                        responseHandler
+                );
+            }
+
             StringEntity entity = null;
             try {
                 entity = new StringEntity(params.toString());
@@ -57,6 +68,14 @@ public class AsyncRestClient {
         if (requestBundle.isDeleteRequest()) {
             return asyncHttpClient.delete(
                     absoluteUrl,
+                    responseHandler
+            );
+        }
+
+        if (requestBundle.isPutRequest()) {
+            return asyncHttpClient.put(
+                    absoluteUrl,
+                    requestParams,
                     responseHandler
             );
         }

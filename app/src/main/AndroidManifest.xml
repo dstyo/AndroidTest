@@ -3,6 +3,8 @@
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 
     <application
         android:name=".AndroidApplication"
@@ -18,8 +20,12 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".page.cars.OrderCarsActivity"
+        <activity
+            android:name=".page.cars.OrderCarsActivity"
             android:theme="@style/MyMaterialTheme.Base.WithoutActionBar"/>
+        <activity android:name=".page.cars.AddCarActivity"
+            android:theme="@style/MyMaterialTheme.Base.WithoutActionBar">
+        </activity>
     </application>
 
 </manifest>

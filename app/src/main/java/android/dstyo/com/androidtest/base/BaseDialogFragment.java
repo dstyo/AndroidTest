@@ -109,13 +109,13 @@ public abstract class BaseDialogFragment
     }
 
     @Override
-    public void setInternetTimedOut(View view) {
+    public void setInternetTimedOut() {
         hideProgressLoading();
         Toast.makeText(getContext(), getResources().getString(R.string.msg_internet_timed_out), Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void setNoInternetConnection(View view) {
+    public void setNoInternetConnection() {
         hideProgressLoading();
         Toast.makeText(getContext(), getResources().getString(R.string.msg_no_internet_connection), Toast.LENGTH_SHORT).show();
     }

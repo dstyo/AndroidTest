@@ -6,7 +6,11 @@ package android.dstyo.com.androidtest.constant;
  */
 public class RequestConstant {
     public static final int ADD_USER = 101;
+    public static final int ADD_CAR = 102;
+    public static final int UPDATE_CAR = 102;
 
 
     public static final String USER_ID="user_id";
+    public static final String CAR_ID="car_id";
+
 }

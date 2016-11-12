@@ -80,7 +80,7 @@ public class UserAddFragment extends AbstractAsyncRequestDialogFragment {
 
     private void getDetailUser() {
         if (!isInternetPresent()) {
-            setNoInternetConnection(getView());
+            setNoInternetConnection();
             return;
         }
 
@@ -101,7 +101,7 @@ public class UserAddFragment extends AbstractAsyncRequestDialogFragment {
 
                     @Override
                     public void onRequestTimedOut() {
-                        Toast.makeText(getContext(), R.string.msg_internet_timed_out, Toast.LENGTH_SHORT).show();
+                        setInternetTimedOut();
                     }
                 }
         );
@@ -135,15 +135,15 @@ public class UserAddFragment extends AbstractAsyncRequestDialogFragment {
         View requestFocusView = null;
 
         if (TextUtils.isEmpty(textInputName.getEditText().getText())) {
-            textInputName.setError("Nama tidak boleh kosong");
+            textInputName.setError("Name cannot be empty");
             requestFocusView = setRequestView(requestFocusView, textInputName);
         }
         if (TextUtils.isEmpty(textInputMobilePhone.getEditText().getText())) {
-            textInputName.setError("Nomor Handphone tidak boleh kosong");
+            textInputName.setError("Mobile Phone cannot be empty");
             requestFocusView = setRequestView(requestFocusView, textInputMobilePhone);
         }
         if (TextUtils.isEmpty(textInputAddress.getEditText().getText())) {
-            textInputName.setError("Alamat tidak boleh kosong");
+            textInputName.setError("Address cannot be empty");
             requestFocusView = setRequestView(requestFocusView, textInputName);
         }
 
@@ -163,7 +163,7 @@ public class UserAddFragment extends AbstractAsyncRequestDialogFragment {
 
     private void addUser(JSONObject jsonParams) {
         if (!isInternetPresent()) {
-            setNoInternetConnection(getView());
+            setNoInternetConnection();
             return;
         }
 
@@ -184,7 +184,7 @@ public class UserAddFragment extends AbstractAsyncRequestDialogFragment {
 
                     @Override
                     public void onRequestTimedOut() {
-                        Toast.makeText(getContext(), R.string.msg_internet_timed_out, Toast.LENGTH_SHORT).show();
+                        setInternetTimedOut();
                     }
                 }
         );

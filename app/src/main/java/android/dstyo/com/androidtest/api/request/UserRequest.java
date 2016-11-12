@@ -27,6 +27,7 @@ public class UserRequest extends AbstractRequest {
         get(
                 getCompleteUrl(API_USERS_REQUEST + EXT_USERS_REQUEST),
                 requestParams,
+                null,
                 responseHandler
         );
     }
@@ -34,6 +35,7 @@ public class UserRequest extends AbstractRequest {
     public void deleteUsers(int id, BooleanResponseHandler responseHandler) {
         delete(
                 getCompleteUrl(ACT_USERS_REQUEST + id + EXT_USERS_REQUEST),
+                null,
                 null,
                 responseHandler
         );
@@ -43,6 +45,7 @@ public class UserRequest extends AbstractRequest {
         post(
                 getCompleteUrl(API_USERS_REQUEST + EXT_USERS_REQUEST),
                 requestParams,
+                null,
                 responseHandler
         );
     }
@@ -50,6 +53,7 @@ public class UserRequest extends AbstractRequest {
     public void getDetailUsers(int id, UserResponseHandler responseHandler) {
         get(
                 getCompleteUrl(ACT_USERS_REQUEST + id + EXT_USERS_REQUEST),
+                null,
                 null,
                 responseHandler
         );

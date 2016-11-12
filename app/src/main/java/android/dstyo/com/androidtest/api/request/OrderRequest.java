@@ -23,6 +23,7 @@ public class OrderRequest extends AbstractRequest {
         get(
                 getCompleteUrl(API_ORDER_REQUEST),
                 requestParams,
+                null,
                 responseHandler
         );
     }

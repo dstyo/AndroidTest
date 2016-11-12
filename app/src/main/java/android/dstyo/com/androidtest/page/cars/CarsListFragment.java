@@ -9,14 +9,14 @@ import android.dstyo.com.androidtest.api.handler.BooleanResponseHandler;
 import android.dstyo.com.androidtest.api.handler.CarListResponseHandler;
 import android.dstyo.com.androidtest.api.request.CarRequest;
 import android.dstyo.com.androidtest.base.AbstractListFragment;
+import android.dstyo.com.androidtest.constant.RequestConstant;
 import android.dstyo.com.androidtest.model.Car;
-import android.dstyo.com.androidtest.model.User;
+import android.dstyo.com.androidtest.page.users.UserAddFragment;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.PopupMenu;
 import android.view.MenuItem;
 import android.view.View;
-
-import com.loopj.android.http.RequestParams;
 
 import org.json.JSONObject;
 
@@ -31,7 +31,7 @@ import java.util.List;
  */
 public class CarsListFragment extends AbstractListFragment<Car> {
 
-    private static final String TAG = "OrderListFragment";
+    private static final String TAG = "CarListFragment";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,16 +55,17 @@ public class CarsListFragment extends AbstractListFragment<Car> {
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        Intent intent = new Intent(getContext(),OrderCarsActivity.class);
+                        Intent intent;
                         switch (item.getItemId()) {
                             case R.id.menu_car_detele:
                                 deleteCars(car.getId());
                                 return true;
                             case R.id.menu_car_order:
+                                intent = new Intent(getContext(), OrderCarsActivity.class);
                                 startActivity(intent);
                                 return true;
                             case R.id.menu_car_update:
-                                startActivity(intent);
+                                updateCar(car.getId());
                                 return true;
                             default:
                                 return false;
@@ -77,6 +78,17 @@ public class CarsListFragment extends AbstractListFragment<Car> {
         };
 
         setListListener(carListClickListener);
+    }
+
+    private void updateCar(int id){
+        FragmentManager fragmentManager = getChildFragmentManager();
+        CarsAddFragment userAddFragment = new CarsAddFragment();
+        Bundle propertyBundle = new Bundle();
+        propertyBundle.putInt(RequestConstant.CAR_ID, id);
+        userAddFragment.setArguments(propertyBundle);
+        userAddFragment.setTargetFragment(
+                CarsListFragment.this, RequestConstant.ADD_CAR);
+        userAddFragment.show(fragmentManager, "Cars");
     }
 
     @Override
@@ -108,17 +120,17 @@ public class CarsListFragment extends AbstractListFragment<Car> {
 
                     @Override
                     public void onRequestTimedOut() {
-                        //setInternetTimedOut(getCoordinatorLayout());
+                        setInternetTimedOut();
                     }
                 }
         );
     }
 
-    private void deleteCars(int carId){
+    private void deleteCars(int carId) {
         showProgressLoading("Deleting Cars");
         (new CarRequest(this)).deleteCars(
                 carId,
-                new BooleanResponseHandler(){
+                new BooleanResponseHandler() {
                     @Override
                     public void onSuccess(Boolean status) {
                         doLoadList();
@@ -132,11 +144,22 @@ public class CarsListFragment extends AbstractListFragment<Car> {
 
                     @Override
                     public void onRequestTimedOut() {
-                        //setInternetTimedOut(binding.content);
+                        setInternetTimedOut();
                     }
                 }
         );
 
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RequestConstant.ADD_CAR) {
+            if (resultCode == Activity.RESULT_OK) {
+                doLoadList();
+            }
+        }
     }
 
     @Override

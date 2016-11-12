@@ -35,17 +35,13 @@ public interface ScreenBehaviorInterface {
 
     /**
      * Show message that internet connection has timed out.
-     *
-     * @param view the parent view to show snackBar message (usually CoordinatorLayout)
      */
-    void setInternetTimedOut(View view);
+    void setInternetTimedOut();
 
     /**
      * Show message that no internet connection present.
-     *
-     * @param view the parent view to show snackBar message (usually CoordinatorLayout)
      */
-    void setNoInternetConnection(View view);
+    void setNoInternetConnection();
 
     /**
      * Return <code>Activity.RESULT_OK</code> intent to Activity's caller.

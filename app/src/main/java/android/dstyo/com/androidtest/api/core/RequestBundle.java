@@ -14,16 +14,18 @@ import org.json.JSONObject;
  */
 public class RequestBundle {
     private final String relativeUrl;
-    private final JSONObject requestParams;
+    private final JSONObject jsonParams;
+    private final RequestParams requestParams;
     private final AbstractResponseHandler responseHandler;
     private final boolean isPostRequest;
     private final boolean isDeleteRequest;
     private final boolean isPutRequest;
 
-    public RequestBundle(String relativeUrl, JSONObject requestParams,
+    public RequestBundle(String relativeUrl, JSONObject jsonParams,RequestParams requestParams,
                          AbstractResponseHandler responseHandler, boolean isPostRequest,
                          boolean isDeleteRequest, boolean isPutRequest) {
         this.relativeUrl = relativeUrl;
+        this.jsonParams = jsonParams;
         this.requestParams = requestParams;
         this.responseHandler = responseHandler;
         this.isPostRequest = isPostRequest;
@@ -35,7 +37,11 @@ public class RequestBundle {
         return relativeUrl;
     }
 
-    public JSONObject getRequestParams() {
+    public JSONObject getJsonParams() {
+        return jsonParams;
+    }
+
+    public RequestParams getRequestParams(){
         return requestParams;
     }
 

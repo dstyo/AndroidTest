@@ -30,11 +30,12 @@ public class AsyncRestClientManager {
      * @param params            http request parameter
      * @param responseHandler   response handler that handle the callback
      */
-    public void get(String relativeUrl, JSONObject params,
+    public void get(String relativeUrl, JSONObject params,RequestParams requestParams,
                     AbstractResponseHandler responseHandler) {
         RequestBundle requestBundle = new RequestBundle(
                 relativeUrl,
                 params,
+                requestParams,
                 responseHandler,
                 false,
                 false,
@@ -50,11 +51,12 @@ public class AsyncRestClientManager {
      * @param params            http request parameter
      * @param responseHandler   response handler that handle the callback
      */
-    public void post(String relativeUrl, JSONObject params,
+    public void post(String relativeUrl, JSONObject params,RequestParams requestParams,
                      AbstractResponseHandler responseHandler) {
         RequestBundle requestBundle = new RequestBundle(
                 relativeUrl,
                 params,
+                requestParams,
                 responseHandler,
                 true,
                 false,
@@ -70,11 +72,12 @@ public class AsyncRestClientManager {
      * @param params            http request parameter
      * @param responseHandler   response handler that handle the callback
      */
-    public void delete(String relativeUrl, JSONObject params,
+    public void delete(String relativeUrl, JSONObject params,RequestParams requestParams,
                     AbstractResponseHandler responseHandler) {
         RequestBundle requestBundle = new RequestBundle(
                 relativeUrl,
                 params,
+                requestParams,
                 responseHandler,
                 false,
                 true,
@@ -90,11 +93,12 @@ public class AsyncRestClientManager {
      * @param params            http request parameter
      * @param responseHandler   response handler that handle the callback
      */
-    public void put(String relativeUrl, JSONObject params,
+    public void put(String relativeUrl, JSONObject params,RequestParams requestParams,
                        AbstractResponseHandler responseHandler) {
         RequestBundle requestBundle = new RequestBundle(
                 relativeUrl,
                 params,
+                requestParams,
                 responseHandler,
                 false,
                 false,

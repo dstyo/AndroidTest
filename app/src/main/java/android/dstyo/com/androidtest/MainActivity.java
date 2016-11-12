@@ -1,8 +1,12 @@
 package android.dstyo.com.androidtest;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.dstyo.com.androidtest.api.interfaces.TagInterface;
+import android.dstyo.com.androidtest.constant.RequestConstant;
+import android.dstyo.com.androidtest.page.cars.CarsFragment;
+import android.dstyo.com.androidtest.page.cars.CarsListFragment;
 import android.dstyo.com.androidtest.page.main.HomeFragment;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

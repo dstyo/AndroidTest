@@ -70,11 +70,12 @@ public abstract class AbstractRequest {
      * @param params            http request params
      * @param responseHandler   response handler that handle the callback
      */
-    protected void post(String relativeUrl, JSONObject params,
+    protected void post(String relativeUrl, JSONObject params, RequestParams requestParams,
                         AbstractResponseHandler responseHandler) {
         restClientManager.post(
                 relativeUrl,
                 params,
+                requestParams,
                 responseHandler
         );
     }
@@ -86,11 +87,12 @@ public abstract class AbstractRequest {
      * @param params            http request params
      * @param responseHandler   response handler that handle the callback
      */
-    protected void get(String relativeUrl, JSONObject params,
+    protected void get(String relativeUrl, JSONObject params,RequestParams requestParams,
                        AbstractResponseHandler responseHandler) {
         restClientManager.get(
                 relativeUrl,
                 params,
+                requestParams,
                 responseHandler
         );
     }
@@ -102,11 +104,12 @@ public abstract class AbstractRequest {
      * @param params            http request params
      * @param responseHandler   response handler that handle the callback
      */
-    protected void delete(String relativeUrl, JSONObject params,
+    protected void delete(String relativeUrl, JSONObject params,RequestParams requestParams,
                        AbstractResponseHandler responseHandler) {
         restClientManager.delete(
                 relativeUrl,
                 params,
+                requestParams,
                 responseHandler
         );
     }
@@ -118,11 +121,12 @@ public abstract class AbstractRequest {
      * @param params            http request params
      * @param responseHandler   response handler that handle the callback
      */
-    protected void put(String relativeUrl, JSONObject params,
+    protected void put(String relativeUrl, JSONObject params,RequestParams requestParams,
                           AbstractResponseHandler responseHandler) {
         restClientManager.put(
                 relativeUrl,
                 params,
+                requestParams,
                 responseHandler
         );
     }

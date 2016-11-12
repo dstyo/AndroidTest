@@ -1,7 +1,11 @@
 package android.dstyo.com.androidtest.page.cars;
 
 
+import android.app.Activity;
+import android.content.Intent;
 import android.dstyo.com.androidtest.R;
+import android.dstyo.com.androidtest.constant.RequestConstant;
+import android.dstyo.com.androidtest.page.users.UserAddFragment;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -67,7 +71,23 @@ public class CarsFragment extends Fragment {
     private void addCarDialog() {
         FragmentManager fragmentManager = getChildFragmentManager();
         CarsAddFragment carsAddFragment = new CarsAddFragment();
-        carsAddFragment.show(fragmentManager, "tag");
+        carsAddFragment.setTargetFragment(
+                CarsFragment.this, RequestConstant.ADD_CAR);
+        carsAddFragment.show(fragmentManager, "Car");
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RequestConstant.ADD_CAR) {
+            if (resultCode == Activity.RESULT_OK) {
+                CarsListFragment carsListFragment = new CarsListFragment();
+                getChildFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fl_content, carsListFragment)
+                        .commit();
+            }
+        }
     }
 
 }

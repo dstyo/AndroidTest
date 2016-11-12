@@ -97,7 +97,7 @@ public class UsersListFragment extends AbstractListFragment<User> {
 
     private void getListUsers() {
         if (!isInternetPresent()) {
-            setNoInternetConnection(getView());
+            setNoInternetConnection();
             return;
         }
 
@@ -116,6 +116,7 @@ public class UsersListFragment extends AbstractListFragment<User> {
 
                     @Override
                     public void onRequestTimedOut() {
+                        setInternetTimedOut();
                     }
                 }
         );
@@ -123,7 +124,7 @@ public class UsersListFragment extends AbstractListFragment<User> {
 
     private void deleteUsers(int userId) {
         if (!isInternetPresent()) {
-            setNoInternetConnection(getView());
+            setNoInternetConnection();
             return;
         }
 
@@ -144,6 +145,7 @@ public class UsersListFragment extends AbstractListFragment<User> {
 
                     @Override
                     public void onRequestTimedOut() {
+                        setInternetTimedOut();
                     }
                 }
         );
