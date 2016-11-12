@@ -18,7 +18,6 @@ public class CarRequest extends AbstractRequest {
     private static final String API_CARS_REQUEST = "/cars";
     private static final String EXT_CARS_REQUEST = ".json";
     private static final String ACT_CARS_REQUEST = "/cars/";
-    private static final String API_ORDERS_REQUEST = "/orders/new";
 
 
     public CarRequest(TagInterface tagInterface) {
@@ -56,14 +55,14 @@ public class CarRequest extends AbstractRequest {
                 responseHandler);
     }
 
-    public void orderCars(JSONObject requestParams, CarListResponseHandler responseHandler) {
-        post(
-                getCompleteUrl(API_ORDERS_REQUEST),
-                requestParams,
-                null,
-                responseHandler
-        );
-    }
+//    public void orderCars(JSONObject requestParams, CarListResponseHandler responseHandler) {
+//        post(
+//                getCompleteUrl(API_ORDERS_REQUEST),
+//                requestParams,
+//                null,
+//                responseHandler
+//        );
+//    }
 
     public void getDetailCars(int id, CarResponseHandler responseHandler) {
         get(

@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".page.cars.OrderCarsActivity"
+            android:name=".page.orders.OrderCarsActivity"
             android:theme="@style/MyMaterialTheme.Base.WithoutActionBar"/>
         <activity android:name=".page.cars.AddCarActivity"
             android:theme="@style/MyMaterialTheme.Base.WithoutActionBar">

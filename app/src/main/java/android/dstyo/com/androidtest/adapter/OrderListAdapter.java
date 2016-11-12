@@ -60,6 +60,7 @@ public class OrderListAdapter extends AbstractListAdapter<Order> {
 
         Order order = getItemAt(position);
         OrderViewHolder orderViewHolder = (OrderViewHolder) holder;
+        orderViewHolder.order = order;
         String titleOrder = order.getUser().getName() + " | " + order.getCar().getModel();
         orderViewHolder.titleOrder.setText(titleOrder);
         orderViewHolder.statusOrder.setText(getStatus(order.getEnd_date()));
@@ -96,14 +97,16 @@ public class OrderListAdapter extends AbstractListAdapter<Order> {
         /**
          * Called when more button (has three dots on the upper right) has been clicked.
          *
-         * @param selectedIndex the item index on the list
+         * @param order the item index on the list
          */
-        void onActionClick(View view, int selectedIndex);
+        void onActionClick(View view, Order order);
 
     }
 
     private class OrderViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
+
+        private Order order;
         private final TextView titleOrder;
         private final TextView statusOrder;
         protected OrderListClickListener orderListClickListener;
@@ -118,7 +121,7 @@ public class OrderListAdapter extends AbstractListAdapter<Order> {
         @Override
         public void onClick(View view) {
             if (null != orderListClickListener) {
-                orderListClickListener.onActionClick(view, getAdapterPosition());
+                orderListClickListener.onActionClick(view, order);
             }
         }
     }

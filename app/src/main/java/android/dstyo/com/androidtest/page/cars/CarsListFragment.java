@@ -11,7 +11,7 @@ import android.dstyo.com.androidtest.api.request.CarRequest;
 import android.dstyo.com.androidtest.base.AbstractListFragment;
 import android.dstyo.com.androidtest.constant.RequestConstant;
 import android.dstyo.com.androidtest.model.Car;
-import android.dstyo.com.androidtest.page.users.UserAddFragment;
+import android.dstyo.com.androidtest.page.orders.OrderCarsActivity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.PopupMenu;
@@ -62,6 +62,7 @@ public class CarsListFragment extends AbstractListFragment<Car> {
                                 return true;
                             case R.id.menu_car_order:
                                 intent = new Intent(getContext(), OrderCarsActivity.class);
+                                intent.putExtra(RequestConstant.CAR_ID, car.getId());
                                 startActivity(intent);
                                 return true;
                             case R.id.menu_car_update:

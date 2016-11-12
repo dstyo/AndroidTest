@@ -31,5 +31,6 @@
     <string name="fare_per_day_field">Fare Per Day</string>
     <string name="msg_internet_timed_out">Internet Timed Out</string>
     <string name="msg_no_internet_connection">No Internet Connection</string>
+    <string name="auto_choose_user">Choose User</string>
 
 </resources>

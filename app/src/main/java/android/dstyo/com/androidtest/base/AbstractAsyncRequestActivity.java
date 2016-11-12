@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
  * @author Dwi Setiyono <dstyo91@gmail.com>
  * @since 2016.10.24
  */
-public abstract class AbstractAsyncRequestActivity extends AppCompatActivity implements TagInterface{
+public abstract class AbstractAsyncRequestActivity extends BaseAppCompactActivity implements TagInterface{
 
     @Override
     protected void onDestroy() {
