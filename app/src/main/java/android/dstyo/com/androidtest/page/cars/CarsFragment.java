@@ -1,15 +1,11 @@
 package android.dstyo.com.androidtest.page.cars;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.dstyo.com.androidtest.R;
-import android.dstyo.com.androidtest.constant.RequestConstant;
-import android.dstyo.com.androidtest.page.users.UserAddFragment;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -36,11 +32,7 @@ public class CarsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true);
-        CarsListFragment carsListFragment = new CarsListFragment();
-        getChildFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fl_content, carsListFragment)
-                .commit();
+        loadFragment();
         View view = inflater.inflate(R.layout.fragment_car, container, false);
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -69,25 +61,21 @@ public class CarsFragment extends Fragment {
     }
 
     private void addCarDialog() {
-        FragmentManager fragmentManager = getChildFragmentManager();
-        CarsAddFragment carsAddFragment = new CarsAddFragment();
-        carsAddFragment.setTargetFragment(
-                CarsFragment.this, RequestConstant.ADD_CAR);
-        carsAddFragment.show(fragmentManager, "Car");
+        Intent intent = new Intent(getActivity(), CarsAddActivity.class);
+        startActivity(intent);
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RequestConstant.ADD_CAR) {
-            if (resultCode == Activity.RESULT_OK) {
-                CarsListFragment carsListFragment = new CarsListFragment();
-                getChildFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fl_content, carsListFragment)
-                        .commit();
-            }
-        }
+    public void onStart() {
+        super.onStart();
+        loadFragment();
     }
 
+    private void loadFragment() {
+        CarsListFragment carsListFragment = new CarsListFragment();
+        getChildFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fl_content, carsListFragment)
+                .commit();
+    }
 }

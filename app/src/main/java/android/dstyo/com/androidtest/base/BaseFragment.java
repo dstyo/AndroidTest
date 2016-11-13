@@ -83,13 +83,13 @@ public abstract class BaseFragment extends Fragment implements ScreenBehaviorInt
     @Override
     public void setInternetTimedOut() {
         hideProgressLoading();
-        Toast.makeText(getContext(), getResources().getString(R.string.msg_internet_timed_out), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), getResources().getString(R.string.msg_internet_timed_out), Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void setNoInternetConnection() {
         hideProgressLoading();
-        Toast.makeText(getContext(), getResources().getString(R.string.msg_no_internet_connection), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), getResources().getString(R.string.msg_no_internet_connection), Toast.LENGTH_LONG).show();
     }
 
     @Override

@@ -33,6 +33,10 @@ public class Car implements Serializable {
     @Expose
     private double farePerDay;
 
+    @SerializedName("image_url")
+    @Expose
+    private String image_url;
+
     public int getId() {
         return id;
     }
@@ -71,5 +75,13 @@ public class Car implements Serializable {
 
     public void setFarePerDay(double farePerDay) {
         this.farePerDay = farePerDay;
+    }
+
+    public String getImage_url() {
+        return image_url;
+    }
+
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
     }
 }

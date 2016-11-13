@@ -1,6 +1,7 @@
 package android.dstyo.com.androidtest.page.orders;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.dstyo.com.androidtest.R;
 import android.dstyo.com.androidtest.api.handler.BooleanResponseHandler;
 import android.dstyo.com.androidtest.api.handler.CarResponseHandler;
@@ -19,23 +20,28 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class OrderCarsActivity extends AbstractAsyncRequestActivity {
+
+public class OrderCarsActivity extends AbstractAsyncRequestActivity implements DatePickerDialog.OnDateSetListener {
 
     private final String TAG = "OrderCars";
     private int orderId;
@@ -47,6 +53,9 @@ public class OrderCarsActivity extends AbstractAsyncRequestActivity {
     private TextView textViewStatus;
     private int carId, userId;
     private AutoCompleteTextView autoUsers;
+    private ImageView imageViewStartDate;
+    private ImageView imageViewEndDate;
+    private TextInputLayout textInputAutoUser;
 
     /**
      * Initialize AppCompat Toolbar.
@@ -63,27 +72,68 @@ public class OrderCarsActivity extends AbstractAsyncRequestActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_cars);
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        final Intent intent = getIntent();
+        final Bundle bundle = intent.getExtras();
 
         orderId = bundle.getInt(RequestConstant.ORDER_ID, -1);
 
         carId = bundle.getInt(RequestConstant.CAR_ID, -1);
 
-
         textInputStartDate = (TextInputLayout) findViewById(R.id.text_input_order_start_date);
         textInputEndDate = (TextInputLayout) findViewById(R.id.text_input_order_end_date);
+        textInputAutoUser = (TextInputLayout) findViewById(R.id.text_input_auto_form_user);
         textViewName = (TextView) findViewById(R.id.tv_title);
         textViewStatus = (TextView) findViewById(R.id.tv_status);
         textViewAmout = (TextView) findViewById(R.id.tv_amount);
+        imageViewStartDate = (ImageView) findViewById(R.id.iv_start_date);
+        imageViewEndDate = (ImageView) findViewById(R.id.iv_end_date);
+
         autoUsers = (AutoCompleteTextView) findViewById(R.id.auto_form_user);
         btnConfirm = (Button) findViewById(R.id.btn_confirm);
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setParam();
+                if (validateForm()) {
+                    setParam();
+                }
             }
         });
+
+        imageViewStartDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar now = Calendar.getInstance();
+                DatePickerDialog dpd = DatePickerDialog.newInstance(
+                        OrderCarsActivity.this,
+                        now.get(Calendar.YEAR),
+                        now.get(Calendar.MONTH),
+                        now.get(Calendar.DAY_OF_MONTH)
+                );
+                Bundle bundleStartDate = new Bundle();
+                bundleStartDate.putString("DatePicker", "start_date");
+                dpd.setArguments(bundleStartDate);
+                dpd.show(getFragmentManager(), "Datepickerdialog");
+            }
+        });
+
+        imageViewEndDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar now = Calendar.getInstance();
+                DatePickerDialog dpd = DatePickerDialog.newInstance(
+                        OrderCarsActivity.this,
+                        now.get(Calendar.YEAR),
+                        now.get(Calendar.MONTH),
+                        now.get(Calendar.DAY_OF_MONTH)
+                );
+                Bundle bundleEndDate = new Bundle();
+                bundleEndDate.putString("DatePicker", "end_date");
+                dpd.setArguments(bundleEndDate);
+                dpd.show(getFragmentManager(), "Datepickerdialog");
+            }
+        });
+
 
         initToolbar();
         if (orderId != -1) {
@@ -93,6 +143,41 @@ public class OrderCarsActivity extends AbstractAsyncRequestActivity {
             getDetailCar(carId);
             getListUsers();
         }
+    }
+
+    private boolean validateForm() {
+        resetError();
+        View requestFocusView = null;
+
+        if (TextUtils.isEmpty(textInputStartDate.getEditText().getText())) {
+            textInputStartDate.setError("Start Date cannot be empty");
+            requestFocusView = setRequestView(requestFocusView, textInputStartDate);
+        }
+        if (TextUtils.isEmpty(textInputEndDate.getEditText().getText())) {
+            textInputEndDate.setError("End Date cannot be empty");
+            requestFocusView = setRequestView(requestFocusView, textInputEndDate);
+        }
+        if (TextUtils.isEmpty(textInputAutoUser.getEditText().getText())) {
+            textInputAutoUser.setError("User cannot be empty");
+            requestFocusView = setRequestView(requestFocusView, textInputAutoUser);
+        }
+
+        if (null != requestFocusView) {
+            requestFocusView.requestFocus();
+            return false;
+        }
+
+        return true;
+    }
+
+    private View setRequestView(View requestViewHolder, View requestView) {
+        return null == requestViewHolder ? requestView : requestViewHolder;
+    }
+
+    private void resetError() {
+        textInputStartDate.setError(null);
+        textInputStartDate.setError(null);
+        textInputAutoUser.setError(null);
     }
 
     private void setParam() {
@@ -146,6 +231,9 @@ public class OrderCarsActivity extends AbstractAsyncRequestActivity {
         }
         autoUsers.setVisibility(View.GONE);
         btnConfirm.setVisibility(View.GONE);
+        imageViewStartDate.setVisibility(View.GONE);
+        imageViewEndDate.setVisibility(View.GONE);
+
         showProgressLoading("Get Detail Orders ..");
         (new OrderRequest(this)).getDetailOrders(
                 orderId,
@@ -250,6 +338,7 @@ public class OrderCarsActivity extends AbstractAsyncRequestActivity {
         textViewName.setText(titleOrder);
         textViewAmout.setText(CurrencyFormatter.format(car.getFarePerDay()));
         textViewStatus.setText("available");
+
     }
 
     private void setDetailOrder(Order order) {
@@ -264,4 +353,21 @@ public class OrderCarsActivity extends AbstractAsyncRequestActivity {
     public Object getTagRequest() {
         return TAG;
     }
+
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+        String date = year + "-" + (++monthOfYear) + "-" + dayOfMonth;
+        Bundle bundle = view.getArguments();
+        String extras = bundle.getString("DatePicker");
+
+        if (extras != null && extras.equals("start_date")) {
+            textInputStartDate.getEditText().setText(date);
+        }
+        else if (extras != null && extras.equals("end_date")) {
+            textInputEndDate.getEditText().setText(date);
+        }
+
+    }
+
+
 }

@@ -99,5 +99,9 @@ public class OrdersListFragment extends AbstractListFragment<Order> {
         return TAG;
     }
 
-
+    @Override
+    public void onStart() {
+        super.onStart();
+        doLoadList();
+    }
 }

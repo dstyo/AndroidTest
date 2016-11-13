@@ -1,0 +1,144 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <com.theartofdev.edmodo.cropper.CropImageView
+            android:id="@+id/CropImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cropBackgroundColor="#88AA66CC"
+            app:cropBorderCornerColor="@android:color/holo_blue_bright"
+            app:cropBorderCornerOffset="0dp"
+            app:cropBorderCornerThickness="5dp"
+            app:cropBorderLineColor="@android:color/holo_green_light"
+            app:cropBorderLineThickness="1dp"
+            app:cropGuidelines="on"
+            app:cropGuidelinesColor="@android:color/holo_red_dark"
+            app:cropInitialCropWindowPaddingRatio="0"
+            app:cropSnapRadius="0dp"/>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:indeterminate="true"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/deep_dark_gray">
+
+        <RelativeLayout
+            android:id="@+id/rl_pick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onLoadImageClick"
+            android:padding="@dimen/divider_margin">
+
+            <ImageView
+                android:id="@+id/iv_camera"
+                android:layout_width="@dimen/ic_size"
+                android:layout_height="@dimen/ic_size"
+                android:src="@android:drawable/ic_menu_camera"/>
+
+            <TextView
+                android:id="@+id/tv_pick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_camera"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="@string/pick_menu"
+                android:textColor="@color/mdtp_white"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_crop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/rl_pick"
+            android:onClick="onCropImageClick"
+            android:padding="@dimen/divider_margin">
+
+            <ImageView
+                android:id="@+id/iv_crop"
+                android:layout_width="@dimen/ic_size"
+                android:layout_height="@dimen/ic_size"
+                android:src="@drawable/icon_crop"/>
+
+            <TextView
+                android:id="@+id/tv_crop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_crop"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="@string/crop_menu"
+                android:textColor="@color/mdtp_white"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/rl_crop"
+            android:onClick="filterImageClick"
+            android:padding="@dimen/divider_margin"
+            android:id="@+id/rl_filter">
+
+            <ImageView
+                android:id="@+id/iv_filter"
+                android:layout_width="@dimen/ic_size"
+                android:layout_height="@dimen/ic_size"
+                android:src="@drawable/icon_filter"/>
+
+            <TextView
+                android:id="@+id/tv_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_filter"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="@string/filter_menu"
+                android:textColor="@color/mdtp_white"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:padding="@dimen/divider_margin"
+            android:onClick="saveCropImageClick">
+
+            <ImageView
+                android:id="@+id/iv_save"
+                android:layout_width="@dimen/ic_size"
+                android:layout_height="@dimen/ic_size"
+                android:src="@drawable/icon_ok"/>
+
+            <TextView
+                android:id="@+id/tv_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_save"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="@string/save_menu"
+                android:textColor="@color/mdtp_white"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+</LinearLayout>

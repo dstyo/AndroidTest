@@ -13,7 +13,6 @@ import android.dstyo.com.androidtest.constant.RequestConstant;
 import android.dstyo.com.androidtest.model.Car;
 import android.dstyo.com.androidtest.page.orders.OrderCarsActivity;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.PopupMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -81,15 +80,10 @@ public class CarsListFragment extends AbstractListFragment<Car> {
         setListListener(carListClickListener);
     }
 
-    private void updateCar(int id){
-        FragmentManager fragmentManager = getChildFragmentManager();
-        CarsAddFragment userAddFragment = new CarsAddFragment();
-        Bundle propertyBundle = new Bundle();
-        propertyBundle.putInt(RequestConstant.CAR_ID, id);
-        userAddFragment.setArguments(propertyBundle);
-        userAddFragment.setTargetFragment(
-                CarsListFragment.this, RequestConstant.ADD_CAR);
-        userAddFragment.show(fragmentManager, "Cars");
+    private void updateCar(int id) {
+        Intent intent = new Intent(getActivity(), CarsAddActivity.class);
+        intent.putExtra(RequestConstant.CAR_ID, id);
+        startActivity(intent);
     }
 
     @Override

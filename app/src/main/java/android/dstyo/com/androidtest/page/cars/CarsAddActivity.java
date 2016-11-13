@@ -1,26 +1,37 @@
 package android.dstyo.com.androidtest.page.cars;
 
+
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.dstyo.com.androidtest.R;
 import android.dstyo.com.androidtest.api.handler.CarResponseHandler;
 import android.dstyo.com.androidtest.api.interfaces.TagInterface;
 import android.dstyo.com.androidtest.api.request.CarRequest;
 import android.dstyo.com.androidtest.base.BaseAppCompactActivity;
-import android.dstyo.com.androidtest.base.BaseFragment;
 import android.dstyo.com.androidtest.constant.RequestConstant;
 import android.dstyo.com.androidtest.model.Car;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.loopj.android.http.RequestParams;
 
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 
-public class AddCarActivity extends BaseAppCompactActivity implements TagInterface {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class CarsAddActivity extends BaseAppCompactActivity implements TagInterface {
 
     private TextInputLayout textInputBrand;
     private TextInputLayout textInputModel;
@@ -28,18 +39,23 @@ public class AddCarActivity extends BaseAppCompactActivity implements TagInterfa
     private TextInputLayout textInputFare;
     private Button btnSave;
     private int carId;
+    private Uri uri;
+    private ImageView imageViewCar;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_car);
-
+        // Inflate the layout for this fragment
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
+        setContentView(R.layout.activity_add_car);
         textInputBrand = (TextInputLayout) findViewById(R.id.text_input_car_brand);
         textInputModel = (TextInputLayout) findViewById(R.id.text_input_car_model);
         textInputPlat = (TextInputLayout) findViewById(R.id.text_input_car_plat);
         textInputFare = (TextInputLayout) findViewById(R.id.text_input_car_fare);
+        imageViewCar = (ImageView) findViewById(R.id.iv_car);
+
         btnSave = (Button) findViewById(R.id.btnSave);
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,8 +66,16 @@ public class AddCarActivity extends BaseAppCompactActivity implements TagInterfa
             }
         });
 
+        imageViewCar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intents = new Intent(CarsAddActivity.this, CropActivity.class);
+                startActivityForResult(intents, RequestConstant.ADD_IMAGE);
+            }
+        });
+
         if (bundle != null) {
-            int carId = intent.getIntExtra(RequestConstant.CAR_ID, 1);
+            int carId = bundle.getInt(RequestConstant.CAR_ID);
             getDetailCar(carId);
             btnSave.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -66,6 +90,14 @@ public class AddCarActivity extends BaseAppCompactActivity implements TagInterfa
 
     private void setParam(boolean isEdited) {
         RequestParams requestParams = new RequestParams();
+        if (uri != null) {
+            try {
+                requestParams.put("car[image]", new File(uri.getPath()));
+            }
+            catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
         requestParams.put("car[brand]", textInputBrand.getEditText().getText());
         requestParams.put("car[model]", textInputModel.getEditText().getText());
         requestParams.put("car[license_plat]", textInputPlat.getEditText().getText());
@@ -108,6 +140,12 @@ public class AddCarActivity extends BaseAppCompactActivity implements TagInterfa
     }
 
     private void setDetailCar(Car car) {
+        if (car.getImage_url() != null) {
+            Glide.with(getApplicationContext())
+                    .load("http://" + car.getImage_url())
+                    .dontAnimate()
+                    .into(imageViewCar);
+        }
         textInputBrand.getEditText().setText(car.getBrand());
         textInputModel.getEditText().setText(car.getModel());
         textInputPlat.getEditText().setText(car.getLicense_plat());
@@ -130,7 +168,7 @@ public class AddCarActivity extends BaseAppCompactActivity implements TagInterfa
                     @Override
                     public void onSuccess(Car car) {
                         hideProgressLoading();
-                        returnIntentOK();
+                        finish();
                     }
 
                     @Override
@@ -145,6 +183,14 @@ public class AddCarActivity extends BaseAppCompactActivity implements TagInterfa
                 }
         );
     }
+
+//    private void carAddNotify() {
+//        hideProgressLoading();
+//        dismissAndNotifyTarget(
+//                RequestConstant.ADD_CAR,
+//                Activity.RESULT_OK
+//        );
+//    }
 
     private void updateCar(RequestParams requestParams) {
 
@@ -162,7 +208,7 @@ public class AddCarActivity extends BaseAppCompactActivity implements TagInterfa
                     @Override
                     public void onSuccess(Car car) {
                         hideProgressLoading();
-                        returnIntentOK();
+                        finish();
                     }
 
                     @Override
@@ -216,6 +262,17 @@ public class AddCarActivity extends BaseAppCompactActivity implements TagInterfa
 
     private View setRequestView(View requestViewHolder, View requestView) {
         return null == requestViewHolder ? requestView : requestViewHolder;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RequestConstant.ADD_IMAGE) {
+            if (resultCode == Activity.RESULT_OK) {
+                uri = Uri.parse(data.getStringExtra("imageUri"));
+                imageViewCar.setImageURI(uri);
+            }
+        }
     }
 
     @Override

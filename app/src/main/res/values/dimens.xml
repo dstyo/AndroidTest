@@ -7,4 +7,5 @@
     <dimen name="font_size_secondary">16sp</dimen>
     <dimen name="divider_margin">5dp</dimen>
     <dimen name="field_size">50dp</dimen>
+    <dimen name="ic_size">40dp</dimen>
 </resources>

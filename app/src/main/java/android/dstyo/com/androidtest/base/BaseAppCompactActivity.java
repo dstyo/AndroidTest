@@ -53,13 +53,13 @@ public class BaseAppCompactActivity extends AppCompatActivity implements ScreenB
     @Override
     public void setInternetTimedOut() {
         hideProgressLoading();
-        Toast.makeText(getApplicationContext(), getResources().getString(R.string.msg_internet_timed_out), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), getResources().getString(R.string.msg_internet_timed_out), Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void setNoInternetConnection() {
         hideProgressLoading();
-        Toast.makeText(getApplicationContext(), getResources().getString(R.string.msg_no_internet_connection), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), getResources().getString(R.string.msg_no_internet_connection), Toast.LENGTH_LONG).show();
     }
 
     @Override

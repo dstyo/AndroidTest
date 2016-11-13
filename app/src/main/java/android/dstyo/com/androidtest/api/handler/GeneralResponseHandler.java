@@ -2,7 +2,6 @@ package android.dstyo.com.androidtest.api.handler;
 
 import android.dstyo.com.androidtest.api.core.AsyncRestClient;
 import android.dstyo.com.androidtest.api.core.RequestBundle;
-import android.util.Log;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -45,6 +44,11 @@ public class GeneralResponseHandler extends JsonHttpResponseHandler {
     }
 
     @Override
+    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+        responseHandler.onFailure(statusCode, headers, throwable, new JSONObject());
+    }
+
+    @Override
     public void onFailure(int statusCode, Header[] headers, Throwable throwable,
                           JSONArray errorResponse) {
         onErrorResponse(
@@ -74,6 +78,6 @@ public class GeneralResponseHandler extends JsonHttpResponseHandler {
 
     private void onErrorResponse(int statusCode, Header[] headers, Throwable throwable,
                                  JSONObject errorResponse) {
-        responseHandler.onFailure(statusCode, headers, throwable, new JSONObject());
+        responseHandler.onFailure(statusCode, headers, throwable, errorResponse);
     }
 }
